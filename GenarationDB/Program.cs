@@ -18,17 +18,45 @@ namespace GenarationDB
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
             int action = 0;
+            
+            do
+            {
+                Console.WriteLine("0. Вихід");
+                Console.WriteLine("1. Керування базами даних");
+                Console.WriteLine("2. Керування окремою БД");
+                action = int.Parse(Console.ReadLine());
+                switch (action)
+                {
+                    case 1:
+                        {
+                            WorkDatabases();
+                            break;
+                        }
+                    case 2:
+                        {
+                            Console.WriteLine("Введіть назву БД:");
+                            string dbName = Console.ReadLine();
+                            WorkTabelsInDB(dbName);
+                            break;
+                        }
+                    
+                }
+            } while (action!=0);
+        }
+
+        //Керування Базами даних
+        static void WorkDatabases()
+        {
             DatabaseManager dbManager = new DatabaseManager(conSTR);
+            int action = 0;
             do
             {
                 Console.WriteLine("0. Вихід");
                 Console.WriteLine("1. Створити БД");
                 Console.WriteLine("2. Видалити БД");
                 Console.WriteLine("3. Показати список БД");
-                Console.WriteLine("4. Підключитися до БД(створити таблиці, видалити, ..)");
-                Console.WriteLine("5. Запис множини даних в tblCustomers");
                 action = int.Parse(Console.ReadLine());
-                switch(action)
+                switch (action)
                 {
                     case 1:
                         {
@@ -40,7 +68,7 @@ namespace GenarationDB
                                 dbManager.CreateDB(name);
                                 Console.WriteLine("------Базу даних успішно створено----");
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine("Помилка створення БД --", ex.Message);
                             }
@@ -62,38 +90,45 @@ namespace GenarationDB
                             Console.WriteLine("------Базу даних успішно видалено----");
                             break;
                         }
+                }
+            } while (action != 0);
+        }
 
-                    case 4:
+        //Керування окремою Базою даних
+        static void WorkTabelsInDB(string dbName)
+        {
+            string conectionSTR = $"{conSTR};Initial Catalog={dbName}";
+            TableManager tableManager = new TableManager(conectionSTR);
+            int action = 0;
+            do
+            {
+                Console.WriteLine("0. Вихід");
+                Console.WriteLine("1. Cтворити таблиці");
+                Console.WriteLine("2. Заповнити БД по замовчюванню");
+                Console.WriteLine("3. Заповнити даними BogusRandom");
+                action = int.Parse(Console.ReadLine());
+                switch (action)
+                {
+                    case 1:
                         {
-                            string dbName;
-                            Console.WriteLine("Введіть назву БД:");
-                            dbName = Console.ReadLine();
-                            string conectionSTR = 
-                                $"{conSTR};Initial Catalog={dbName}";
-                            TableManager tableManager = new TableManager(conectionSTR);
                             tableManager.CreateTabels();
-                            tableManager.SeederDatabase();
-
                             break;
                         }
-                    case 5:
+                    case 2:
+                        {
+                            tableManager.SeederDatabase();
+                            break;
+                        }
+                    case 3:
                         {
                             Stopwatch stopWatch = new Stopwatch();
                             stopWatch.Start();
-                            string dbName;
-                            Console.WriteLine("Введіть назву БД:");
-                            dbName = Console.ReadLine();
-                            string conectionSTR =
-                                $"{conSTR};Initial Catalog={dbName}";
-
-                            TableManager tableManager = new TableManager(conectionSTR);
                             Console.WriteLine("Сказіть кількість клієнтів");
                             int n = int.Parse(Console.ReadLine());
                             tableManager.RandomInsertCustomers(n);
                             stopWatch.Stop();
                             // Get the elapsed time as a TimeSpan value.
                             TimeSpan ts = stopWatch.Elapsed;
-
                             // Format and display the TimeSpan value.
                             string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                                 ts.Hours, ts.Minutes, ts.Seconds,
@@ -102,9 +137,8 @@ namespace GenarationDB
                             break;
                         }
                 }
-            } while (action!=0);
+            } while (action != 0);
         }
 
-        
     }
 }

@@ -19,7 +19,7 @@ namespace GenarationDB
 
         public void CreateDB(string name)
         {
-            string sql = $"CREATE DATABASE {name};";
+            string sql = $"CREATE DATABASE [{name}];";
             SqlCommand command = con.CreateCommand();
             command.CommandText = sql;
             command.ExecuteNonQuery(); //посилаємо команду в БД
@@ -27,7 +27,7 @@ namespace GenarationDB
 
         public void DeleteDB(string name)
         {
-            string sql = $"DROP DATABASE {name};";
+            string sql = $"DROP DATABASE [{name}];";
             SqlCommand command = con.CreateCommand();
             command.CommandText = sql;
             command.ExecuteNonQuery(); //посилаємо команду в БД
