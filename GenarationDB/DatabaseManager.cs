@@ -36,12 +36,16 @@ namespace GenarationDB
         public void ShowAllDatabase()
         {
             string sql = $"SELECT name FROM master.sys.databases where owner_sid!=1;";
-            SqlCommand command = con.CreateCommand();
-            command.CommandText = sql;
-            var reader = command.ExecuteReader();//посилаємо команду в БД
-            while (reader.Read())
+            using (SqlCommand command = con.CreateCommand())
             {
-                Console.WriteLine(reader["name"]);
+                command.CommandText = sql;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader["name"]);
+                    }
+                }
             }
         }
     }
