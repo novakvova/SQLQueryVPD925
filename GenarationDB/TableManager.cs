@@ -41,6 +41,12 @@ namespace GenarationDB
             ExecuteCommandFromFile("tblOrdersDetails.sql");
             //Створити viewProducts
             ExecuteCommandFromFile("viewProducts.sql");
+
+            //Створити CategoryType
+            ExecuteCommandFromFile("CategoryType.sql");
+
+            //Створити spInsertCategoryList
+            ExecuteCommandFromFile("spInsertCategoryList.sql");
         }
 
         /// <summary>

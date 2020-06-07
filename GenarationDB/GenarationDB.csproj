@@ -59,7 +59,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="sql\CategoryType.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="sql\seeder.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sql\spInsertCategoryList.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="sql\tblCategories.sql">
