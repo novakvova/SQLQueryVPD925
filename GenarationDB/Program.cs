@@ -107,6 +107,7 @@ namespace GenarationDB
                 Console.WriteLine("2. Заповнити БД по замовчюванню");
                 Console.WriteLine("3. Заповнити даними BogusRandom");
                 Console.WriteLine("4. Показати продукти");
+                Console.WriteLine("5. Заповнити даними за допомогою SP");
                 action = int.Parse(Console.ReadLine());
                 switch (action)
                 {
@@ -143,6 +144,14 @@ namespace GenarationDB
                             ProductManager pm = new ProductManager(con);
                             Console.WriteLine("------Продукти БД--------");
                             pm.Show();
+                            break;
+                        }
+                    case 5:
+                        {
+                            var con = tableManager.GetSqlConnection;
+                            ProductManager pm = new ProductManager(con);
+                            Console.WriteLine("------Додавання трьох категорій--------");
+                            pm.InsertCategoriesRandomSP();
                             break;
                         }
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,29 @@ namespace GenarationDB
                 Console.WriteLine("Id: {0}", reader["Id"]);
                 Console.WriteLine("Name: {0}", reader["Name"]);
             }
+        }
+
+        public void InsertCategoriesRandomSP()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Name");
+            dt.Columns.Add("Description");
+
+            dt.Rows.Add("Ноутбуки", "Для іграків");
+            dt.Rows.Add("ПК", "Два гіга два ядра");
+            dt.Rows.Add("Телефони", "Туплять у вайберів і менше у телеграмі");
+
+            SqlCommand comm = new SqlCommand("spInsertCategoryList", _con);
+            comm.CommandType = CommandType.StoredProcedure;
+            SqlParameter pCatList = new SqlParameter()
+            {
+                ParameterName = "@ListInsert",
+                Value = dt
+            };
+            comm.Parameters.Add(pCatList);
+
+            comm.ExecuteNonQuery();
+            
         }
 
     }
