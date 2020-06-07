@@ -106,6 +106,7 @@ namespace GenarationDB
                 Console.WriteLine("1. Cтворити таблиці");
                 Console.WriteLine("2. Заповнити БД по замовчюванню");
                 Console.WriteLine("3. Заповнити даними BogusRandom");
+                Console.WriteLine("4. Показати продукти");
                 action = int.Parse(Console.ReadLine());
                 switch (action)
                 {
@@ -134,6 +135,14 @@ namespace GenarationDB
                                 ts.Hours, ts.Minutes, ts.Seconds,
                                 ts.Milliseconds / 10);
                             Console.WriteLine("RunTime " + elapsedTime);
+                            break;
+                        }
+                    case 4:
+                        {
+                            var con = tableManager.GetSqlConnection;
+                            ProductManager pm = new ProductManager(con);
+                            Console.WriteLine("------Продукти БД--------");
+                            pm.Show();
                             break;
                         }
                 }

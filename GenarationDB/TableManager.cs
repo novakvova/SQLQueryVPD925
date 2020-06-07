@@ -14,11 +14,13 @@ namespace GenarationDB
     {
         private readonly SqlConnection con;
         private string dirSql = "sql";
+
         public TableManager(string connStr)
         {
             con = new SqlConnection(connStr);
             con.Open();
         }
+
         public void CreateTabels()
         {
             //Назви категорій
@@ -37,6 +39,8 @@ namespace GenarationDB
             ExecuteCommandFromFile("tblOrders.sql");
             //Список товарів у заказі
             ExecuteCommandFromFile("tblOrdersDetails.sql");
+            //Створити viewProducts
+            ExecuteCommandFromFile("viewProducts.sql");
         }
 
         /// <summary>
@@ -47,8 +51,6 @@ namespace GenarationDB
             //Закинути в БД дефолтні значення
             ExecuteCommandFromFile("seeder.sql");
         }
-
-
 
         public void RandomInsertCustomers(int count)
         {
@@ -75,8 +77,10 @@ namespace GenarationDB
                 command.CommandText = sql;
                 command.ExecuteNonQuery(); //посилаємо команду в БД
             }
-            
+
         }
+
+        public SqlConnection GetSqlConnection { get { return con; } } 
 
         private void ExecuteCommandFromFile(string file)
         {
@@ -91,5 +95,7 @@ namespace GenarationDB
             string sql=File.ReadAllText($"{dirSql}\\{file}");
             return sql;
         }
+
+
     }
 }
