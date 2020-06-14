@@ -35,7 +35,7 @@ namespace GenarationDB
 
         public void ShowAllDatabase()
         {
-            string sql = $"SELECT name FROM master.sys.databases where owner_sid!=1;";
+            string sql = $"SELECT name FROM master.sys.databases";
             using (SqlCommand command = con.CreateCommand())
             {
                 command.CommandText = sql;

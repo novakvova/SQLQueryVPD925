@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -10,8 +11,11 @@ namespace GenarationDB
 {
     class Program
     {
-        static string conSTR = 
-            "Data Source=DESKTOP-HEB4007;Integrated Security=True";
+        //static string conSTR = 
+        //    "Data Source=DESKTOP-HEB4007;Integrated Security=True";
+
+        static string conSTR =
+            ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
         
         static void Main(string[] args)
         {
@@ -108,6 +112,7 @@ namespace GenarationDB
                 Console.WriteLine("3. Заповнити даними BogusRandom");
                 Console.WriteLine("4. Показати продукти");
                 Console.WriteLine("5. Заповнити даними за допомогою SP");
+                Console.WriteLine("6. Провести операцію в транзації");
                 action = int.Parse(Console.ReadLine());
                 switch (action)
                 {
@@ -152,6 +157,14 @@ namespace GenarationDB
                             ProductManager pm = new ProductManager(con);
                             Console.WriteLine("------Додавання трьох категорій--------");
                             pm.InsertCategoriesRandomSP();
+                            break;
+                        }
+                    case 6:
+                        {
+                            var con = tableManager.GetSqlConnection;
+                            ProductManager pm = new ProductManager(con);
+                            Console.WriteLine("------Тест транзакцій--------");
+                            pm.TransactionTest();
                             break;
                         }
                 }
